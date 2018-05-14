@@ -2,6 +2,8 @@
 #include <QPainter>
 #include <QMessageBox>
 #include <QThread>
+#include <QDebug>
+#include <QDir>
 ImgWidget::ImgWidget(QWidget *parent)
 	: QWidget(parent)
 {
@@ -13,6 +15,7 @@ ImgWidget::ImgWidget(QWidget *parent)
 	newimg = img;
 	//img.load("F:/UCI/UAV/Avionics/Object_Detection/cpp_branch/field_image.png");
 	//ui.imgContainer->update();
+    qDebug()<<"inner container size "<<ContainerSize;
 }
 
 void ImgWidget::paintEvent(QPaintEvent* e)
@@ -33,8 +36,8 @@ void ImgWidget::paintEvent(QPaintEvent* e)
 void ImgWidget::mousePressEvent(QMouseEvent* event)
 {
 	//QMessageBox box(this);
-	//if (EditEnable)
-	//{
+    if (EditEnable)
+    {
 	QPainter p(this);
 	p.drawRect(50, 50, 100, 100);
 		if (event->button() == Qt::LeftButton)
@@ -42,7 +45,7 @@ void ImgWidget::mousePressEvent(QMouseEvent* event)
 			lastpoint = event->pos();
 			MouseHolding = true;
 		}
-	//}
+    }
 }
 
 void ImgWidget::mouseMoveEvent(QMouseEvent* event)
@@ -66,7 +69,7 @@ void ImgWidget::mouseReleaseEvent(QMouseEvent* event)
 		endpoint = event->pos();
 		MouseHolding = false;
 		update();
-		QThread::sleep(2);
+        //QThread::sleep(2);
 		CropToFill();
 
 		/*
@@ -90,7 +93,7 @@ void ImgWidget::CropToFill()
 	newimg = newimg.scaled(ContainerSize);
 	ResetFocusPoint();
 	update();
-	ImgSave();
+    //ImgSave();
 }
 void ImgWidget::ResetFocusPoint()
 {
@@ -100,7 +103,8 @@ void ImgWidget::ResetFocusPoint()
 
 void ImgWidget::LoadImg()
 {
-	img.load("C:/Users/Houjunbai/Pictures/Donald Trump.jpg");
+
+    img.load(QDir::currentPath()+"/field_image.png");
 	img = img.scaled(ContainerSize);
 }
 
@@ -108,10 +112,11 @@ void ImgWidget::UndoEdit()
 {
 	newimg = img;
 	update();
+    ResetFocusPoint();
 }		
 
 void ImgWidget::ImgSave()
 {
-	if (!newimg.save("new_img.jpeg"))
+    if (!newimg.save("new_img.jpeg"))
 		QMessageBox(QMessageBox::Warning, "image not saved", "image not saved, try again");
 }

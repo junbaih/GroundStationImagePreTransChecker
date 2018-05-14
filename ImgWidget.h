@@ -20,7 +20,7 @@ private:
 	Ui::imgContainer ui;
 	QPoint lastpoint = QPoint(0,0);
 	QPoint endpoint = QPoint(0, 0);
-	bool EditEnable = true;
+    bool EditEnable = false;
 	bool MouseHolding = false;
 	void CropToFill();
 	QSize ContainerSize;
