@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "ImgWidget.h"
-#include <QScrollArea>
+#include "propertywidget.h"
 namespace Ui {
 class ImgReview;
 }
@@ -20,7 +20,7 @@ public:
 private:
     Ui::ImgReview *ui;
     ImgWidget* ImgContainer;
-    QScrollArea* PropertyContainer;
+    PropertyWidget* PropertyContainer;
 
 public slots:
     void ImgEditingEnable();

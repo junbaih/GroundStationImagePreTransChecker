@@ -12,8 +12,9 @@ ImgReview::ImgReview(QWidget *parent) :
    // ImgContainer->setMaximumSize(800,this->height());
    // ImgContainer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     ui->ImgContainer = ImgContainer;
-    PropertyContainer = new QScrollArea();
+    PropertyContainer = new PropertyWidget(this);
     ui->PropertyContainer = PropertyContainer;
+    ui->PropertyContainer->setGeometry(820,10,PropertyContainer->width(),this->height());
     qDebug()<<"outer container size"<<ui->ImgContainer->size();
     connect(ui->IEditButton,SIGNAL(clicked()),this,SLOT(ImgEditingEnable()));
     connect(ui->IResetButton,SIGNAL(clicked()),this,SLOT(ImgReset()));

@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QJsonDocument>
+#include <QJsonObject>
+#include <QLabel>
 namespace Ui {
 class PropertyWidget;
 }
@@ -14,10 +16,14 @@ class PropertyWidget : public QWidget
 public:
     explicit PropertyWidget(QWidget *parent = 0);
     ~PropertyWidget();
+    void loadProperty(QString filename);
 
 private:
     Ui::PropertyWidget *ui;
-    QJsonDocument Property;
+    QJsonDocument ImgProperty;
+    QJsonObject PropertyObject;
+    QString settings;
+    void DisplayProperty();
 };
 
 #endif // PROPERTYWIDGET_H
