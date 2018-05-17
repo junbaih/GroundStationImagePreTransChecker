@@ -1,8 +1,6 @@
 #include "propertywidget.h"
 #include "ui_propertywidget.h"
-#include <QFile>
-#include <QDebug>
-#include <QTextStream>
+
 PropertyWidget::PropertyWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::PropertyWidget)
@@ -31,12 +29,34 @@ void PropertyWidget::loadProperty(QString filename)
     file.close();
     ImgProperty = QJsonDocument::fromJson(settings.toUtf8());
     PropertyObject = ImgProperty.object();
+    newDoc = new QTextDocument(settings);
+}
+
+void PropertyWidget::saveProperty()
+{
+    QString filename = "new_property.json";
+    QFile newfile(filename);
+    if ( newfile.open(QIODevice::WriteOnly) )
+     {
+         QTextStream stream( &newfile );
+         stream << newDoc->toPlainText() << endl;
+         newfile.close();
+     }
+    else
+        QMessageBox(QMessageBox::Warning, "property not saved", "property not saved, try again");
+
+}
+
+void PropertyWidget::resetProperty()
+{
+ qDebug()<<"start reset";
+ newDoc = new QTextDocument(settings);
+ ui->textEdit->setDocument(newDoc);
 }
 
 void PropertyWidget::DisplayProperty()
-{
-    QTextDocument* doc = new QTextDocument(settings);
-    ui->textEdit->setDocument(doc);
+{ 
+    ui->textEdit->setDocument(newDoc);
     //ui->textEdit->setText(settings);
     qDebug()<<settings;
 }

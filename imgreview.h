@@ -28,6 +28,10 @@ public slots:
     void ImgReset();
     // void ImgSend();
     // void ImgNext();
+    void PropertyReset();
+    void PropertySave();
+    //void PropertySend();
+    //void PropertyNext();
 };
 
 #endif // IMGREVIEW_H
